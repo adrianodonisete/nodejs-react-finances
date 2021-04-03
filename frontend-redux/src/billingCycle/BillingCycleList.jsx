@@ -21,8 +21,6 @@ class BillingCycleList extends Component {
 	}
 
 	render() {
-		console.log(this.props.list);
-		// const selected = this.props.tab.selected === this.props.id;
 		return (
 			<div>
 				<table className="table">

@@ -5,6 +5,7 @@ import Header from '../common/template/Header';
 import SideBar from '../common/template/SideBar';
 import Footer from '../common/template/Footer';
 import Routes from './Routes';
+import Messages from '../common/msg/Messages';
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Routes />
 			</div>
 			<Footer />
+			<Messages />
 		</div>
 	);
 }

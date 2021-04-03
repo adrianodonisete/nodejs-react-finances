@@ -11,12 +11,15 @@ import TabHeaderChild from '../common/tab/TabHeaderChild';
 import TabContentChild from '../common/tab/TabContentChild';
 
 import { selectTab, showTabs } from '../common/tab/TabActions';
+import { create } from './BillingCycleActions';
 import BillingCycleList from './BillingCycleList';
+import BillingCycleForm from './BillingCycleForm';
+import { TAB_CREATE, TAB_DELETE, TAB_LIST, TAB_UPDATE } from '../common/constants';
 
 class BillingCycle extends Component {
 	componentWillMount() {
-		this.props.selectTab('tabList');
-		this.props.showTabs('tabList', 'tabCreate', 'tabDelete');
+		this.props.selectTab(TAB_LIST);
+		this.props.showTabs(TAB_LIST, TAB_CREATE);
 	}
 	render() {
 		return (
@@ -25,23 +28,26 @@ class BillingCycle extends Component {
 				<Content>
 					<Tabs>
 						<TabsHeader>
-							<TabHeaderChild label="Listar" icon="bars" target="tabList" />
-							<TabHeaderChild label="Incluir" icon="plus" target="tabCreate" />
-							<TabHeaderChild label="Alterar" icon="pencil" target="tabUpdate" />
-							<TabHeaderChild label="Excluir" icon="trash-o" target="tabDelete" />
+							<TabHeaderChild label="Listar" icon="bars" target={TAB_LIST} />
+							<TabHeaderChild label="Incluir" icon="plus" target={TAB_CREATE} />
+							<TabHeaderChild label="Alterar" icon="pencil" target={TAB_UPDATE} />
+							<TabHeaderChild label="Excluir" icon="trash-o" target={TAB_DELETE} />
 						</TabsHeader>
 
 						<TabsContent>
-							<TabContentChild id="tabList">
+							<TabContentChild id={TAB_LIST}>
 								<BillingCycleList />
 							</TabContentChild>
-							<TabContentChild id="tabCreate">
-								<h1>Incluir</h1>
+
+							<TabContentChild id={TAB_CREATE}>
+								<BillingCycleForm onSubmit={this.props.create} />
 							</TabContentChild>
-							<TabContentChild id="tabUpdate">
+
+							<TabContentChild id={TAB_UPDATE}>
 								<h1>Alterar</h1>
 							</TabContentChild>
-							<TabContentChild id="tabDelete">
+
+							<TabContentChild id={TAB_DELETE}>
 								<h1>Excluir</h1>
 							</TabContentChild>
 						</TabsContent>
@@ -52,6 +58,6 @@ class BillingCycle extends Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ selectTab, showTabs }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ selectTab, showTabs, create }, dispatch);
 
 export default connect(null, mapDispatchToProps)(BillingCycle);
