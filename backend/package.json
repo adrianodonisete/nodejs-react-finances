@@ -1,25 +1,30 @@
 {
-  "name": "nodejs-finances",
+  "name": "my-money-backend",
   "version": "1.0.0",
-  "description": "Adriano Donisete Machado",
-  "main": "index.js",
+  "description": "",
+  "main": "src/loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon",
+    "dev": "nodemon",
+    "production": "pm2 start src/loader.js --name my-money-backend"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
+    "bcrypt": "5.0.0",
+    "body-parser": "^1.15.2",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3",
-    "express-validator": "^5.3.0",
-    "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.2",
-    "multer": "^1.4.0"
+    "express": "^4.14.0",
+    "express-query-int": "^1.0.1",
+    "jsonwebtoken": "^7.3.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.7.0",
+    "mongoose-paginate": "^5.0.3",
+    "node-restful": "^0.2.5",
+    "pm2": "^2.1.5"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.11.0"
   }
 }
