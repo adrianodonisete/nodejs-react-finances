@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function MenuTree(props) {
 	return (
 		<li className="treeview">
-			<a href>
+			<Link to="#">
 				<i className={`fa fa-${props.icon}`}></i>
 				<span>{props.label}</span>
 				<i className="fa fa-angle-left pull-right"></i>
-			</a>
+			</Link>
 			<ul className="treeview-menu">{props.children}</ul>
 		</li>
 	);

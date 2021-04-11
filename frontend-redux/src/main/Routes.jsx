@@ -1,20 +1,19 @@
 import React from 'react';
-import { Router, hashHistory, IndexRoute, Route, Redirect } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 
-import App from './App';
 import BillingCycle from '../billingCycle/BillingCycle';
 import Dashboard from '../dashboard/Dashboard';
 
-function Routes() {
+function Routes(props) {
 	return (
-		<Router history={hashHistory}>
-			<Route path="/" component={App}>
-				<IndexRoute component={Dashboard} />
-				<Route path="dash" component={Dashboard} />
-				<Route path="billingCycles" component={BillingCycle} />
-			</Route>
-			<Redirect from="*" to="/" />
-		</Router>
+		<div className="content-wrapper">
+			<Switch>
+				<Route exact path="/" component={Dashboard} />
+				<Route exact path="/dash" component={Dashboard} />
+				<Route exact path="/billingCycles" component={BillingCycle} />
+				<Redirect from="*" to="/" />
+			</Switch>
+		</div>
 	);
 }
 

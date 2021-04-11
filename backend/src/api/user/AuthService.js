@@ -2,7 +2,6 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('./user');
-// const env = require('../../.env');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -10,7 +9,7 @@ dotenv.config();
 const authSecret = process.env.AUTH_SECRET;
 
 const emailRegex = /\S+@\S+\.\S+/;
-const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/;
+const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15})/;
 
 const sendErrorsFromDB = (res, dbErrors) => {
 	const errors = [];
@@ -26,7 +25,7 @@ const login = (req, res, next) => {
 		if (err) {
 			return sendErrorsFromDB(res, err);
 		} else if (user && bcrypt.compareSync(password, user.password)) {
-			const token = jwt.sign(user, authSecret, {
+			const token = jwt.sign({ ...user }, authSecret, {
 				expiresIn: '1 day',
 			});
 
@@ -53,6 +52,7 @@ const signup = (req, res, next) => {
 	if (!email.match(emailRegex)) {
 		return res.status(400).send({ errors: ['O e-mail informa está inválido'] });
 	}
+
 	if (!password.match(passwordRegex)) {
 		return res.status(400).send({
 			errors: [
@@ -67,6 +67,7 @@ const signup = (req, res, next) => {
 	if (!bcrypt.compareSync(confirmPassword, passwordHash)) {
 		return res.status(400).send({ errors: ['Senhas não conferem.'] });
 	}
+
 	User.findOne({ email }, (err, user) => {
 		if (err) {
 			return sendErrorsFromDB(res, err);
@@ -74,9 +75,9 @@ const signup = (req, res, next) => {
 			return res.status(400).send({ errors: ['Usuário já cadastrado.'] });
 		} else {
 			const newUser = new User({ name, email, password: passwordHash });
-			newUser.save(err => {
-				if (err) {
-					return sendErrorsFromDB(res, err);
+			newUser.save(e => {
+				if (e) {
+					return sendErrorsFromDB(res, e);
 				} else {
 					login(req, res, next);
 				}
@@ -84,3 +85,5 @@ const signup = (req, res, next) => {
 		}
 	});
 };
+
+module.exports = { login, signup, validateToken };

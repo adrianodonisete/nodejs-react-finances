@@ -8,7 +8,7 @@ import {
 	BILLING_CYCLE_FORM,
 	TAB_CREATE,
 	TAB_LIST,
-	BASE_URL,
+	API_URL,
 	TAB_UPDATE,
 	TAB_DELETE,
 } from '../common/constants';
@@ -16,7 +16,7 @@ import {
 const INITIAL_VALUES = { credits: [{}], debts: [{}] };
 
 export function getList() {
-	const request = axios.get(`${BASE_URL}/billingCycles`);
+	const request = axios.get(`${API_URL}/billingCycles`);
 	return {
 		type: BILLING_CYCLE_FETCHED,
 		payload: request,
@@ -38,7 +38,7 @@ export function destroy(values) {
 function submit(values, method) {
 	return dispatch => {
 		const id = values._id ? values._id : '';
-		axios[method](`${BASE_URL}/billingCycles/${id}`, values)
+		axios[method](`${API_URL}/billingCycles/${id}`, values)
 			.then(resp => {
 				toastr.success('Sucesso!', 'Operação realizada com sucesso.');
 				dispatch(init());

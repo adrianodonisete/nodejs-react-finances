@@ -16,12 +16,11 @@ import BillingCycleForm from './BillingCycleForm';
 import { TAB_CREATE, TAB_DELETE, TAB_LIST, TAB_UPDATE } from '../common/constants';
 
 class BillingCycle extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.init();
 	}
 
 	render() {
-		console.log('BillingCycle', this.props);
 		return (
 			<div className="teste">
 				<ContentHeader title="Ciclos de Pagamentos" small="Cadastro" />
@@ -72,5 +71,4 @@ class BillingCycle extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({ init, create, update, destroy }, dispatch);
-
 export default connect(null, mapDispatchToProps)(BillingCycle);

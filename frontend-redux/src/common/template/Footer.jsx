@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
 	return (
 		<footer className="main-footer">
 			<strong>Copyright &copy; {new Date().getFullYear()}</strong>
-			<a href="http://cod3r.com.br" target="_blank">
+			<Link to="http://cod3r.com.br" target="_blank" rel="noreferrer">
 				{' '}
 				Cod3r
-			</a>
+			</Link>
 			.
 		</footer>
 	);

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { getList, showUpdate, showDelete } from './BillingCycleActions';
 
 class BillingCycleList extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.getList();
 	}
 

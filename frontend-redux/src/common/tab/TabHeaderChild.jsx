@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import If from '../operator/If';
 
@@ -12,15 +13,15 @@ class TabHeaderChild extends Component {
 		return (
 			<If test={visible}>
 				<li className={selected ? 'active' : ''}>
-					<a
-						href="javascript:;"
+					<Link
+						to="#"
 						data-toggle="tab"
 						data-target={this.props.target}
 						onClick={() => this.props.selectTab(this.props.target)}
 					>
 						<i className={`fa fa-${this.props.icon}`}></i>
 						{this.props.label}
-					</a>
+					</Link>
 				</li>
 			</If>
 		);

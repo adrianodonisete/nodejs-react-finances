@@ -1,6 +1,7 @@
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import React from 'react';
 import ReduxToastr from 'react-redux-toastr';
-import 'toastr_css/react-redux-toastr.css';
+
 import { TEN_SECONDS } from '../constants';
 
 function Messages(props) {
