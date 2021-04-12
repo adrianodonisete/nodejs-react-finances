@@ -4,30 +4,21 @@ mongoose.Promise = global.Promise;
 const dotenv = require('dotenv');
 dotenv.config();
 
-const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
-const DB_HOST = process.env.DB_HOST;
-const ENVIROMENT = process.env.ENVIROMENT;
+const DB_URL = process.env.URL_MONGO;
 
-let DB_URL;
-if (ENVIROMENT === 'dev') {
-	DB_URL = `mongodb://${DB_HOST}/${DB_NAME}`;
-} else {
-	DB_URL = `mongodb+srv://${DB_HOST}/${DB_NAME}`;
-}
+console.log(DB_URL);
 
 module.exports = mongoose
 	.connect(DB_URL, {
 		useNewUrlParser: true,
-		useUnifiedTopology: true,
+		// useUnifiedTopology: true,
+		auth: { authSource: 'admin' },
 		user: DB_USER,
 		pass: DB_PASS,
-		auth: { authSource: 'admin' },
 	})
-	.catch(e => console.log(e));
-
-// module.exports = mongoose.connect('mongodb://localhost/mymoney');
+	.catch(e => console.log('error', e));
 
 mongoose.Error.messages.general.required = "O atributo '{PATH}' é obrigatório.";
 mongoose.Error.messages.Number.min = "O '{VALUE}' informado é menor que o limite mínimo de '{MIN}'.";

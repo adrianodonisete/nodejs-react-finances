@@ -12,6 +12,7 @@ const emailRegex = /\S+@\S+\.\S+/;
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15})/;
 
 const sendErrorsFromDB = (res, dbErrors) => {
+	console.log(dbErrors);
 	const errors = [];
 	_.forIn(dbErrors.errors, error => errors.push(error.message));
 	return res.status(400).json({ errors });
