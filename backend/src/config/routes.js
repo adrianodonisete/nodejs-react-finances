@@ -19,4 +19,11 @@ module.exports = function (server) {
 	openApi.post('/login', AuthService.login);
 	openApi.post('/signup', AuthService.signup);
 	openApi.post('/validateToken', AuthService.validateToken);
+
+	//? finances rota aberta
+	const router = express.Router();
+	server.use('/v2', router);
+
+	const Finances = require('../api/finance/financesService');
+	Finances.register(router, '/finances');
 };
