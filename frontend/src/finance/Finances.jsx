@@ -1,26 +1,62 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Field } from 'redux-form';
+
+import TabHeaderChild from '../common/tab/TabHeaderChild';
+import TabsHeader from '../common/tab/TabsHeader';
+import TabsContent from '../common/tab/TabsContent';
+import Content from '../common/template/Content';
+import ContentHeader from '../common/template/ContentHeader';
+import TabContentChild from '../common/tab/TabContentChild';
+import LabelAndInput from '../common/form/LabelAndInput';
+
+import { init } from './FinancesActions';
+
+import { TAB_FIN_CAD_EVENTS, TAB_FIN_LIST_EVENTS, TAB_FIN_TEXT_AREA, TAB_FIN_EDIT_EVENTS } from '../common/constants';
 
 class Finances extends Component {
+	componentDidMount() {
+		this.props.init();
+	}
+
 	render() {
+		const handleSubmit = () => [];
+		const readOnly = false;
+
 		return (
 			<div>
-				<table>
-					<thead>
-						<tr>
-							<th>Coluna 1</th>
-							<th>Coluna 2</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>TEste</td>
-							<td>Valor</td>
-						</tr>
-					</tbody>
-				</table>
+				<ContentHeader title="Minhas Finanças" small="Entrada e Saída" />
+				<Content>
+					<TabsHeader>
+						<TabHeaderChild label="Listar Eventos" icon="bars" target={TAB_FIN_LIST_EVENTS} />
+						<TabHeaderChild label="Cadastrar Eventos" icon="plus" target={TAB_FIN_TEXT_AREA} />
+						<TabHeaderChild label="Revisar Eventos" icon="plus" target={TAB_FIN_CAD_EVENTS} />
+						<TabHeaderChild label="Editar Eventos" icon="pencil" target={TAB_FIN_EDIT_EVENTS} />
+					</TabsHeader>
+
+					<TabsContent>
+						<TabContentChild id={TAB_FIN_LIST_EVENTS}>
+							<h2>Listar Eventos - Entrada e Saída</h2>
+						</TabContentChild>
+					</TabsContent>
+
+					<TabContentChild id={TAB_FIN_TEXT_AREA}>
+						<form onSubmit={handleSubmit}>
+							<div className="box-body">
+								<textarea name="list_events" id="list_events" cols="30" rows="10"></textarea>
+
+								<button type="button" className="btn btn-default" onClick={() => console.log('here')}>
+									Cancelar
+								</button>
+							</div>
+						</form>
+					</TabContentChild>
+				</Content>
 			</div>
 		);
 	}
 }
 
-export default Finances;
+const mapDispatchToProps = dispatch => bindActionCreators({ init }, dispatch);
+export default connect(null, mapDispatchToProps)(Finances);

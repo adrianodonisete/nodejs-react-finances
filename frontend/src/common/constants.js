@@ -10,6 +10,14 @@ export const TAB_CREATE = 'tabCreate';
 export const TAB_UPDATE = 'tabUpdate';
 export const TAB_DELETE = 'tabDelete';
 
+export const FINANCES_FETCHED = 'FINANCES_FETCHED';
+export const FINANCES_FORM = 'FinancesForm';
+
+export const TAB_FIN_LIST_EVENTS = 'tabFinListEvents';
+export const TAB_FIN_TEXT_AREA = 'tabFinTextArea';
+export const TAB_FIN_CAD_EVENTS = 'tabFinCadEvents';
+export const TAB_FIN_EDIT_EVENTS = 'tabFinEditEvents';
+
 export const TAB_SELECTED = 'TAB_SELECTED';
 export const TAB_SHOWED = 'TAB_SHOWED';
 
