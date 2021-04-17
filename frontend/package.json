@@ -12,6 +12,7 @@
     "ionicons": "4.4.3",
     "jquery": "^3.6.0",
     "react": "^16.14.0",
+    "react-date-picker": "^8.1.1",
     "react-dom": "^16.14.0",
     "react-redux": "5.0.7",
     "react-redux-toastr": "7.4.0",
