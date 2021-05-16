@@ -33,6 +33,13 @@ export const mainListItems = (
 			<ListItemText primary="Despesas" />
 		</ListItem>
 
+		<ListItem button component={Link} to="/pages/activities/register">
+			<ListItemIcon>
+				<PeopleIcon />
+			</ListItemIcon>
+			<ListItemText primary="Cadastrar" />
+		</ListItem>
+
 		<ListItem button component={Link} to="/pages/categories">
 			<ListItemIcon>
 				<BarChartIcon />

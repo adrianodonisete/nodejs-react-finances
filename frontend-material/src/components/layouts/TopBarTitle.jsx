@@ -3,14 +3,18 @@ import { Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 
 function getTitle(location) {
-	console.log(location);
-
 	switch (location.pathname) {
 		case '/pages/received':
 			return 'Atividades - Entradas';
 
 		case '/pages/expenses':
 			return 'Atividades - Saídas';
+
+		case '/pages/activities/register':
+			return 'Cadastrar Atividades';
+
+		case '/pages/activities/validation':
+			return 'Cadastrar Atividades - Validação';
 
 		case '/pages/categories':
 			return 'Categorias de Atividades';

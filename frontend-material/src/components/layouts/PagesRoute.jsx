@@ -20,8 +20,10 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Copyright from './Copyright';
 import Dashboard from '../dashboard/Dashboard';
 import FinanceActivities from '../finances/FinanceActivities';
+import ActivitiesRegisterForm from '../finances/ActivitiesRegisterForm';
 import Error404 from '../errors/Error404';
 import TopBarTitle from './TopBarTitle';
+import ActivitiesValidationForm from '../finances/ActivitiesValidationForm';
 
 const useStyles = useStylesDefault;
 
@@ -87,7 +89,7 @@ export default function PagesRoute() {
 					height: '100vh',
 					overflow: 'auto',
 				}}
-				style={{ width: 'calc(120vh + 50px)' }}
+				style={{ width: 'calc(200vh + 50px)' }}
 			>
 				<div className={classes.appBarSpacer} />
 				<Container maxWidth="lg" className={classes.container}>
@@ -100,6 +102,12 @@ export default function PagesRoute() {
 						</Route>
 						<Route key="received" exact path="/pages/received">
 							<FinanceActivities useClasses={classes} option="received" />
+						</Route>
+						<Route key="activities-register" exact path="/pages/activities/register">
+							<ActivitiesRegisterForm useClasses={classes} />
+						</Route>
+						<Route key="activities-validation" exact path="/pages/activities/validation">
+							<ActivitiesValidationForm useClasses={classes} />
 						</Route>
 						<Route path="*">
 							<Error404 topBar={false} linkDasboard={false} />
@@ -114,5 +122,3 @@ export default function PagesRoute() {
 		</div>
 	);
 }
-
-// border: '3px green solid',
