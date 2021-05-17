@@ -16,6 +16,10 @@ const useStylesFormActivities = makeStyles(theme => ({
 	small: {
 		fontSize: '0.65em',
 	},
+	gridListItem: {
+		fontWeight: 'bold',
+		fontSize: '1.35em',
+	},
 }));
 
 export default useStylesFormActivities;

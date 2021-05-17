@@ -12,7 +12,7 @@ export default function ActivitiesValidationForm() {
 				Cadastrar despesas e recebimentos
 			</Typography>
 			<Grid container spacing={3}>
-				<Grid item xs={12} sm={6}>
+				<Grid item xs={12}>
 					<TextField
 						required
 						id="firstName"
