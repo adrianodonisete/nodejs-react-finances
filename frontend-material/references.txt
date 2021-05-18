@@ -14,3 +14,12 @@ https://github.com/mui-org/material-ui/blob/a83a7b3dec5d1f1f78655288d8db2fbdf44c
 
 tratamento erro form https://material-ui.com/components/text-fields/
 after login, redir to dashboard
+
+
+entrada;01/07/2020;R$ 85,80;Mercpag*mercadolivre;Compras
+saida;01/07/2020;R$ 124,20;Paypal *rappibrasil;Alimentacao
+entrada;16/07/2020;2;Zp *ifoodmpay;Alimentacao
+saida;16/07/2020;33,8;Ifood *ifood;Alimentacao
+entrada;18/07/2020;99,24;Paypal *rappibrasil;Alimentacao
+saida;20/07/2020;27;Socio Rei;Pessoal
+entrada;20/07/2020;27;Socio Rei;Pessoal

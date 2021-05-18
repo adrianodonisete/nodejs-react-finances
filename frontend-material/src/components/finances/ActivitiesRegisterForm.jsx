@@ -22,17 +22,11 @@ export default function ActivitiesRegisterForm() {
 
 	const contentTextRef = useRef();
 
-	const getGridsActivities = () =>
-		listActivities.map((activity, index) => (
-			<GridActivity activity={activity} index={index} changeHandler={fieldChangeHandler} />
-		));
-
 	const submitContentHandler = event => {
 		event.preventDefault();
 
 		const newContent = contentTextRef.current.value.trim();
 		if (newContent === '') {
-			console.log('error');
 			setIsShowContent(true);
 		} else {
 			setIsShowContent(false);
@@ -43,6 +37,7 @@ export default function ActivitiesRegisterForm() {
 
 	const submitValidateHandler = event => {
 		event.preventDefault();
+
 		console.log(listActivities);
 	};
 
@@ -54,11 +49,14 @@ export default function ActivitiesRegisterForm() {
 	const fieldChangeHandler = event => {
 		const [field, index] = event.target.id.split('-');
 		const newList = [...listActivities];
-		console.log('action');
-
 		newList[index][field] = event.target.value;
 		setListActivities(newList);
 	};
+
+	const getGridsActivities = () =>
+		listActivities.map((activity, index) => (
+			<GridActivity activity={activity} index={index} changeHandler={fieldChangeHandler} />
+		));
 
 	return (
 		<React.Fragment>

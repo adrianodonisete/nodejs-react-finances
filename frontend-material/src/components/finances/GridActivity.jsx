@@ -8,7 +8,7 @@ const GridActivity = props => {
 	const key = props.index;
 	const changeHandler = props.changeHandler;
 
-	const categories = Categories.getCategories();
+	const categories = Categories;
 
 	return (
 		<Grid key={`container-${key}-idx`} container spacing={3}>
