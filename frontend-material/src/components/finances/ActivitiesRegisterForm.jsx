@@ -8,6 +8,7 @@ import If from '../UI/If';
 import GridActivity from './GridActivity';
 import HeaderActivity from './HeaderActivity';
 import FormatContent from '../../util/FormatContent';
+import { create } from './FinancesActions';
 
 import useStylesFormActivities from '../styles/useStylesFormActivities';
 
@@ -38,7 +39,10 @@ export default function ActivitiesRegisterForm() {
 	const submitValidateHandler = event => {
 		event.preventDefault();
 
-		console.log(listActivities);
+		console.log('submit');
+		create(listActivities);
+
+		// console.log(listActivities);
 	};
 
 	const backContentHandler = event => {
@@ -55,7 +59,12 @@ export default function ActivitiesRegisterForm() {
 
 	const getGridsActivities = () =>
 		listActivities.map((activity, index) => (
-			<GridActivity activity={activity} index={index} changeHandler={fieldChangeHandler} />
+			<GridActivity
+				key={`GridActivity-${index}`}
+				activity={activity}
+				index={index}
+				changeHandler={fieldChangeHandler}
+			/>
 		));
 
 	return (

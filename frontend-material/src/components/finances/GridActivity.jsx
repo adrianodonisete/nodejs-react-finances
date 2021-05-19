@@ -75,7 +75,9 @@ const GridActivity = props => {
 					}}
 				>
 					{categories.map(cat => (
-						<option value={cat}>{cat}</option>
+						<option key={`category[${key}-${cat}]`} value={cat}>
+							{cat}
+						</option>
 					))}
 				</Select>
 			</Grid>
