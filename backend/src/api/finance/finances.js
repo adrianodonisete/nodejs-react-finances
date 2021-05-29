@@ -8,6 +8,7 @@ const financesSchema = new mongoose.Schema(
 		value: { type: Number, min: 0, required: [true, 'Informe o valor da transação!'] },
 		description: { type: String, required: [true, 'Informe a descrição!'] },
 		category: { type: String, required: [true, 'Informe a categoria da transação!'] },
+		hash: { type: String, required: false },
 	},
 	{
 		timestamps: { createdAt: true, updatedAt: true },

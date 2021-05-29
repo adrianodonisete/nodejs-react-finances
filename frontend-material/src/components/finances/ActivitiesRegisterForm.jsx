@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
@@ -8,18 +8,32 @@ import If from '../UI/If';
 import GridActivity from './GridActivity';
 import HeaderActivity from './HeaderActivity';
 import FormatContent from '../../util/FormatContent';
-import { create } from './FinancesActions';
 
 import useStylesFormActivities from '../styles/useStylesFormActivities';
+import FinancesReducers from './FinancesReducers';
 
 const useStyles = useStylesFormActivities;
+
+const TEXT_AREA = 'textArea';
+const LIST_ITENS = 'listItens';
+const RESULT_SHOW = 'resultShow';
+
+const DEFAULT_FORM_ACTIVITIES = {
+	items: [],
+	total: 0,
+	optionShow: '',
+	success: true,
+};
 
 export default function ActivitiesRegisterForm() {
 	const classes = useStyles();
 
+	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
+	console.log(activitiesState.value);
+
 	const [listActivities, setListActivities] = useState([]);
 	const [content, setContent] = useState('');
-	const [isShowContent, setIsShowContent] = useState(true);
+	const [optionShowContent, setOptionShowContent] = useState(TEXT_AREA);
 
 	const contentTextRef = useRef();
 
@@ -28,9 +42,9 @@ export default function ActivitiesRegisterForm() {
 
 		const newContent = contentTextRef.current.value.trim();
 		if (newContent === '') {
-			setIsShowContent(true);
+			setOptionShowContent(TEXT_AREA);
 		} else {
-			setIsShowContent(false);
+			setOptionShowContent(LIST_ITENS);
 			setContent(FormatContent.formatTextSheet(newContent));
 			setListActivities(FormatContent.textSheetToArray(newContent));
 		}
@@ -39,15 +53,18 @@ export default function ActivitiesRegisterForm() {
 	const submitValidateHandler = event => {
 		event.preventDefault();
 
-		console.log('submit');
-		create(listActivities);
+		console.log(1);
 
-		// console.log(listActivities);
+		dispatchActivitiesState({ type: 'CREATE_ACTIVITIES', listActivities: listActivities });
+
+		console.log(4);
+
+		setOptionShowContent(RESULT_SHOW);
 	};
 
 	const backContentHandler = event => {
 		event.preventDefault();
-		setIsShowContent(true);
+		setOptionShowContent(TEXT_AREA);
 	};
 
 	const fieldChangeHandler = event => {
@@ -69,7 +86,31 @@ export default function ActivitiesRegisterForm() {
 
 	return (
 		<React.Fragment>
-			<If show={isShowContent}>
+			<If show={optionShowContent === RESULT_SHOW}>
+				<Typography variant="h4" gutterBottom>
+					Operação executada com
+					{activitiesState.success ? <em> Sucesso</em> : <em> Erro</em>}!
+				</Typography>
+				<Typography variant="subtitle2" gutterBottom>
+					<em>10 atividades inseridades</em>
+				</Typography>
+
+				<Grid item xs={6} style={{ marginTop: '20px' }}>
+					<Button
+						type="button"
+						variant="contained"
+						size="large"
+						color="default"
+						className={classes.marginButton}
+						onClick={backContentHandler}
+						style={{ marginLeft: '50px' }}
+					>
+						Recomeçar
+					</Button>
+				</Grid>
+			</If>
+
+			<If show={optionShowContent === TEXT_AREA}>
 				<Typography variant="h4" gutterBottom>
 					Cole o conteúdo da planilha
 				</Typography>
@@ -103,7 +144,7 @@ export default function ActivitiesRegisterForm() {
 				</form>
 			</If>
 
-			<If show={!isShowContent}>
+			<If show={optionShowContent === LIST_ITENS}>
 				<Typography variant="h4" gutterBottom>
 					Validar atividades
 				</Typography>
