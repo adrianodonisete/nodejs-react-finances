@@ -11,11 +11,13 @@ import FormatContent from '../../util/FormatContent';
 
 import useStylesFormActivities from '../styles/useStylesFormActivities';
 import FinancesReducers from './FinancesReducers';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = useStylesFormActivities;
 
 const TEXT_AREA = 'textArea';
 const LIST_ITENS = 'listItens';
+const PROGRESS_SHOW = 'progressShow';
 const RESULT_SHOW = 'resultShow';
 
 const DEFAULT_FORM_ACTIVITIES = {
@@ -29,8 +31,8 @@ export default function ActivitiesRegisterForm() {
 	const classes = useStyles();
 
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
-	console.log(activitiesState.value);
 
+	const [activitiesInserted, setActivitiesInserted] = useState(0);
 	const [listActivities, setListActivities] = useState([]);
 	const [content, setContent] = useState('');
 	const [optionShowContent, setOptionShowContent] = useState(TEXT_AREA);
@@ -54,11 +56,20 @@ export default function ActivitiesRegisterForm() {
 		event.preventDefault();
 
 		console.log(1);
+		setOptionShowContent(PROGRESS_SHOW);
 
-		dispatchActivitiesState({ type: 'CREATE_ACTIVITIES', listActivities: listActivities });
+		setTimeout(() => {
+			dispatchActivitiesState({
+				type: 'CREATE_ACTIVITIES',
+				listActivities: listActivities,
+				onResultShow: resultShowHandler,
+			});
+		}, 4000);
+	};
 
-		console.log(4);
-
+	const resultShowHandler = totalActivities => {
+		console.log([RESULT_SHOW, totalActivities]);
+		setActivitiesInserted(totalActivities);
 		setOptionShowContent(RESULT_SHOW);
 	};
 
@@ -86,13 +97,21 @@ export default function ActivitiesRegisterForm() {
 
 	return (
 		<React.Fragment>
-			<If show={optionShowContent === RESULT_SHOW}>
+			<If show={optionShowContent === PROGRESS_SHOW}>
 				<Typography variant="h4" gutterBottom>
-					Operação executada com
-					{activitiesState.success ? <em> Sucesso</em> : <em> Erro</em>}!
+					<CircularProgress color="primary" />
 				</Typography>
 				<Typography variant="subtitle2" gutterBottom>
-					<em>10 atividades inseridades</em>
+					Processando, aguarde...
+				</Typography>
+			</If>
+
+			<If show={optionShowContent === RESULT_SHOW}>
+				<Typography variant="h4" gutterBottom>
+					Operação executada com {activitiesInserted === 0 ? <em>Erro</em> : <em>Sucesso</em>}!
+				</Typography>
+				<Typography variant="subtitle2" gutterBottom>
+					<em>{activitiesInserted} atividades inseridas</em>
 				</Typography>
 
 				<Grid item xs={6} style={{ marginTop: '20px' }}>

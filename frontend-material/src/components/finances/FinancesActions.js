@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:3003/v2';
 // const OAPI_URL = 'http://localhost:3003/oapi';
 
-export async function create(listActivities) {
+export async function create(listActivities, onResultShow) {
 	const requests = [];
 	for (const activity of listActivities) {
 		requests.push(axios.post(`${API_URL}/finances/`, activity));
@@ -11,31 +11,36 @@ export async function create(listActivities) {
 
 	console.log(2, 'ini2');
 
-	const successExec = await axios
+	return axios
 		.all(requests)
-		.then((...responses) => {
-			responses.map(resp => console.log(resp));
-			return true;
+		.then((...allResponses) => {
+			const totalActivities = allResponses[0].length;
+			allResponses.map(resp => {
+				console.log('testes 11');
+				console.log(resp[0].data);
+				return resp[0].data;
+			});
+			return totalActivities;
 		})
+		.then(totalActivities => onResultShow(totalActivities))
 		.catch(e => {
+			console.log('error 222');
 			console.log(e);
-			return false;
 		});
-
-	console.log(3, successExec, successExec ? 'end3' : 'ini3');
-
-	return await retCreate(successExec);
 }
 
-async function retCreate(exec) {
-	console.log(exec);
-
-	return {
-		items: [],
-		total: 0,
-		optionShow: 'ini',
-		success: false,
-	};
+export function retrieve(filters, onResultShow) {
+	axios
+		.get(`${API_URL}/finances/`, {})
+		.then(resp => {
+			console.log('testes 333');
+			console.log(resp[0].data);
+			return resp[0].data;
+		})
+		.catch(e => {
+			console.log('error 444');
+			console.log(e);
+		});
 }
 
 export function init(responses) {
