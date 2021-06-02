@@ -6,6 +6,10 @@ const Date = {
 		}
 		return dateBr;
 	},
+	formatDateToDayMonthYear: isoDate => {
+		const dateEvent = new window.Date(isoDate);
+		return dateEvent.getDate() + '/' + parseInt(dateEvent.getMonth() + 1) + '/' + dateEvent.getFullYear();
+	},
 };
 
 export default Date;

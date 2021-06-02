@@ -7,18 +7,13 @@ import Button from '@material-ui/core/Button';
 import If from '../UI/If';
 import GridActivity from './GridActivity';
 import HeaderActivity from './HeaderActivity';
+import FinancesReducers from './FinancesReducers';
 import FormatContent from '../../util/FormatContent';
+import { CREATE_ACTIVITIES, LIST_ITENS, PROGRESS_SHOW, RESULT_SHOW, TEXT_AREA } from '../../util/Constants';
 
 import useStylesFormActivities from '../styles/useStylesFormActivities';
-import FinancesReducers from './FinancesReducers';
-import { CircularProgress } from '@material-ui/core';
-
+import ProgressWaiting from '../UI/ProgressWaiting';
 const useStyles = useStylesFormActivities;
-
-const TEXT_AREA = 'textArea';
-const LIST_ITENS = 'listItens';
-const PROGRESS_SHOW = 'progressShow';
-const RESULT_SHOW = 'resultShow';
 
 const DEFAULT_FORM_ACTIVITIES = {
 	items: [],
@@ -31,6 +26,7 @@ export default function ActivitiesRegisterForm() {
 	const classes = useStyles();
 
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
+	console.log(activitiesState);
 
 	const [activitiesInserted, setActivitiesInserted] = useState(0);
 	const [listActivities, setListActivities] = useState([]);
@@ -60,7 +56,7 @@ export default function ActivitiesRegisterForm() {
 
 		setTimeout(() => {
 			dispatchActivitiesState({
-				type: 'CREATE_ACTIVITIES',
+				type: CREATE_ACTIVITIES,
 				listActivities: listActivities,
 				onResultShow: resultShowHandler,
 			});
@@ -98,12 +94,7 @@ export default function ActivitiesRegisterForm() {
 	return (
 		<React.Fragment>
 			<If show={optionShowContent === PROGRESS_SHOW}>
-				<Typography variant="h4" gutterBottom>
-					<CircularProgress color="primary" />
-				</Typography>
-				<Typography variant="subtitle2" gutterBottom>
-					Processando, aguarde...
-				</Typography>
+				<ProgressWaiting />
 			</If>
 
 			<If show={optionShowContent === RESULT_SHOW}>

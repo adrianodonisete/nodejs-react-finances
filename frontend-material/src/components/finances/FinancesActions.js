@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3003/v2';
-// const OAPI_URL = 'http://localhost:3003/oapi';
+import { API_URL } from '../../util/Constants';
 
 export async function create(listActivities, onResultShow) {
 	const requests = [];
@@ -16,7 +15,7 @@ export async function create(listActivities, onResultShow) {
 		.then((...allResponses) => {
 			const totalActivities = allResponses[0].length;
 			allResponses.map(resp => {
-				console.log('testes 11');
+				console.log('testes 111');
 				console.log(resp[0].data);
 				return resp[0].data;
 			});
@@ -24,21 +23,24 @@ export async function create(listActivities, onResultShow) {
 		})
 		.then(totalActivities => onResultShow(totalActivities))
 		.catch(e => {
-			console.log('error 222');
+			console.log('error 111');
 			console.log(e);
 		});
 }
 
-export function retrieve(filters, onResultShow) {
+export async function retrieve(params, onMountRowsActivities) {
 	axios
-		.get(`${API_URL}/finances/`, {})
+		.get(`${API_URL}/finances/`, {
+			params: params,
+		})
 		.then(resp => {
 			console.log('testes 333');
-			console.log(resp[0].data);
-			return resp[0].data;
+			console.log(resp.data);
+			return resp.data;
 		})
+		.then(activities => onMountRowsActivities(activities))
 		.catch(e => {
-			console.log('error 444');
+			console.log('error 333');
 			console.log(e);
 		});
 }

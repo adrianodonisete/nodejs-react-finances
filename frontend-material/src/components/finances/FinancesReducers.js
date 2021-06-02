@@ -1,7 +1,6 @@
 import { create, retrieve } from './FinancesActions';
 
-const CREATE_ACTIVITIES = 'CREATE_ACTIVITIES';
-const GET_ACTIVITIES = 'GET_ACTIVITIES';
+import { CREATE_ACTIVITIES, GET_ACTIVITIES } from '../../util/Constants';
 
 const INITIAL_STATE = {
 	items: [],
@@ -17,7 +16,10 @@ const FinancesReducers = (state = INITIAL_STATE, action = null) => {
 			return create(action.listActivities, action.onResultShow);
 
 		case GET_ACTIVITIES:
-			return retrieve('option=debit&limit=10&sort=-dateEvent', action.onResultShow);
+			console.log(GET_ACTIVITIES);
+			const params = action.params;
+			// 'option=debit&limit=10&sort=-dateEvent'
+			return retrieve(params, action.onMountRowsActivities);
 
 		default:
 			return state;
