@@ -5,6 +5,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Button from '@material-ui/core/Button';
 
 import If from '../UI/If';
+import ProgressWaiting from '../UI/ProgressWaiting';
 import GridActivity from './GridActivity';
 import HeaderActivity from './HeaderActivity';
 import FinancesReducers from './FinancesReducers';
@@ -12,7 +13,6 @@ import FormatContent from '../../util/FormatContent';
 import { CREATE_ACTIVITIES, LIST_ITENS, PROGRESS_SHOW, RESULT_SHOW, TEXT_AREA } from '../../util/Constants';
 
 import useStylesFormActivities from '../styles/useStylesFormActivities';
-import ProgressWaiting from '../UI/ProgressWaiting';
 const useStyles = useStylesFormActivities;
 
 const DEFAULT_FORM_ACTIVITIES = {
