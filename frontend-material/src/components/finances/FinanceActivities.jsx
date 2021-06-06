@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,6 +26,16 @@ const DEFAULT_TOTALS = {
 	debits: 0,
 	all: 0,
 };
+const DEFAULT_PARAMS = {
+	type: GET_ACTIVITIES,
+	params: {
+		limit: '15',
+		sort: 'dateEvent',
+		dateEvent__gte: '2020-07-01',
+		dateEvent__lte: '2020-07-31',
+	},
+	onMountRowsActivities: null,
+};
 
 export default function FinanceActivities(props) {
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
@@ -51,33 +61,18 @@ export default function FinanceActivities(props) {
 		setOptionShowContent(TABLE_ITENS);
 	};
 
+	const getActivitiesHandler = useCallback(params => {
+		dispatchActivitiesState(params);
+	}, []);
+
 	useEffect(() => {
 		setTimeout(() => {
-			dispatchActivitiesState({
-				type: GET_ACTIVITIES,
-				params: {
-					limit: '10',
-					sort: 'dateEvent',
-					dateEvent__gte: '2021-05-01',
-					dateEvent__lte: '2021-05-31',
-				},
+			getActivitiesHandler({
+				...DEFAULT_PARAMS,
 				onMountRowsActivities: mountRowsHandler,
 			});
 		}, 500);
-	}, []);
-
-	const getActivitiesHandler = () => {
-		dispatchActivitiesState({
-			type: GET_ACTIVITIES,
-			params: {
-				limit: '5',
-				sort: '-dateEvent',
-				dateEvent__gte: '2020-07-01',
-				dateEvent__lte: '2020-07-31',
-			},
-			onMountRowsActivities: mountRowsHandler,
-		});
-	};
+	}, [getActivitiesHandler]);
 
 	const getTitle = () => {
 		return props.option === 'expenses' ? 'Atividades Maio/21' : 'Despesas Maio/21';
