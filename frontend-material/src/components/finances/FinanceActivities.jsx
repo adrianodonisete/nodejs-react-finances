@@ -15,6 +15,7 @@ import FinancesReducers from './FinancesReducers';
 import Date from '../../util/Date';
 
 import { GET_ACTIVITIES, PROGRESS_SHOW, TABLE_ITENS } from '../../util/Constants';
+import ActivitiesFilterForm from './ActivitiesFilterForm';
 
 const DEFAULT_FORM_ACTIVITIES = {
 	items: [],
@@ -26,16 +27,6 @@ const DEFAULT_TOTALS = {
 	debits: 0,
 	all: 0,
 };
-const DEFAULT_PARAMS = {
-	type: GET_ACTIVITIES,
-	params: {
-		limit: '15',
-		sort: 'dateEvent',
-		dateEvent__gte: '2020-07-01',
-		dateEvent__lte: '2020-07-31',
-	},
-	onMountRowsActivities: null,
-};
 
 export default function FinanceActivities(props) {
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
@@ -43,7 +34,17 @@ export default function FinanceActivities(props) {
 
 	const [optionShowContent, setOptionShowContent] = useState(PROGRESS_SHOW);
 	const [rowsActivities, setRowsActivities] = useState([]);
+	const [months, setMonths] = useState([]);
 	const [totals, setTotals] = useState(DEFAULT_TOTALS);
+
+	const defaultParams = () => {
+		const dates = Date.getFirstAndLastDayOfMonth('2021-05-01');
+		return {
+			sort: 'dateEvent',
+			dateEvent__gte: dates.firstDayOfMonth,
+			dateEvent__lte: dates.lastDayOfMonth,
+		};
+	};
 
 	const mountRowsHandler = results => {
 		setRowsActivities(results);
@@ -61,18 +62,29 @@ export default function FinanceActivities(props) {
 		setOptionShowContent(TABLE_ITENS);
 	};
 
-	const getActivitiesHandler = useCallback(params => {
-		dispatchActivitiesState(params);
+	const getActivitiesHandler = useCallback(action => {
+		dispatchActivitiesState(action);
 	}, []);
 
 	useEffect(() => {
 		setTimeout(() => {
 			getActivitiesHandler({
-				...DEFAULT_PARAMS,
+				type: GET_ACTIVITIES,
+				params: defaultParams(),
 				onMountRowsActivities: mountRowsHandler,
 			});
+			setMonths(Date.getLastMonths());
 		}, 500);
 	}, [getActivitiesHandler]);
+
+	const filterActivitiesHandler = params => {
+		const action = {
+			type: GET_ACTIVITIES,
+			params: params,
+			onMountRowsActivities: mountRowsHandler,
+		};
+		getActivitiesHandler(action);
+	};
 
 	const getTitle = () => {
 		return props.option === 'expenses' ? 'Atividades Maio/21' : 'Despesas Maio/21';
@@ -81,6 +93,7 @@ export default function FinanceActivities(props) {
 	const getListActivities = () =>
 		rowsActivities.map(row => (
 			<TableRow key={row._id}>
+				<TableCell>{' -- '}</TableCell>
 				<TableCell>{row._id}</TableCell>
 				<TableCell>{row.option === 'entry' ? 'Entrada' : 'Saída'}</TableCell>
 				<TableCell>{row.category}</TableCell>
@@ -117,7 +130,10 @@ export default function FinanceActivities(props) {
 					<Title>{getTitle()}</Title>
 					<Table size="small">
 						<TableHead>
+							<ActivitiesFilterForm onFilterActivitiesHandler={filterActivitiesHandler} months={months} />
+
 							<TableRow>
+								<TableCell>Ações</TableCell>
 								<TableCell>ID</TableCell>
 								<TableCell>Operação</TableCell>
 								<TableCell>Categoria</TableCell>

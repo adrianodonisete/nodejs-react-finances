@@ -24,6 +24,37 @@ const Date = {
 			dateEvent.getFullYear()
 		);
 	},
+	getLastMonths: () => {
+		const formatter = new Intl.DateTimeFormat('pt-BR', { month: 'short' });
+		const months = [];
+		const today = new window.Date();
+
+		let loops = 0;
+		let operator = 0;
+		while (loops < 12) {
+			const month = new window.Date(today.getFullYear(), today.getMonth() + operator, 1);
+			const name = formatter.format(month).toString().replace('.', '') + '/' + month.getFullYear();
+			months.push({
+				text: name.toUpperCase(),
+				date: month.toISOString(),
+			});
+			loops++;
+			operator--;
+		}
+		return months;
+	},
+	getFirstAndLastDayOfMonth: (month = null) => {
+		let date = new window.Date();
+		if (month) {
+			date = new window.Date(month);
+		}
+		const firstDayOfMonth = new window.Date(date.getFullYear(), date.getMonth() + 1, 1);
+		const lastDayOfMonth = new window.Date(date.getFullYear(), date.getMonth() + 2, 0);
+		return {
+			firstDayOfMonth,
+			lastDayOfMonth,
+		};
+	},
 };
 
 export default Date;
