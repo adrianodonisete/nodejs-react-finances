@@ -4,11 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 function getTitle(location) {
 	switch (location.pathname) {
-		case '/pages/received':
-			return 'Atividades - Entradas';
-
-		case '/pages/expenses':
-			return 'Atividades - Saídas';
+		case '/pages/activities':
+			return 'Atividades';
 
 		case '/pages/activities/register':
 			return 'Cadastrar Atividades';

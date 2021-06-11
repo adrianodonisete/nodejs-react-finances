@@ -97,11 +97,8 @@ export default function PagesRoute() {
 						<Route exact path={['/', '/pages', '/pages/dashboard']}>
 							<Dashboard useClasses={classes} />
 						</Route>
-						<Route key="expenses" exact path="/pages/expenses">
-							<FinanceActivities useClasses={classes} option="expenses" />
-						</Route>
-						<Route key="received" exact path="/pages/received">
-							<FinanceActivities useClasses={classes} option="received" />
+						<Route key="activities" exact path="/pages/activities">
+							<FinanceActivities useClasses={classes} />
 						</Route>
 						<Route key="activities-register" exact path="/pages/activities/register">
 							<ActivitiesRegisterForm useClasses={classes} />

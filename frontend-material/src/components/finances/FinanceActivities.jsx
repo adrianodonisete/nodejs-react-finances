@@ -25,7 +25,7 @@ const DEFAULT_FORM_ACTIVITIES = {
 const DEFAULT_TOTALS = {
 	entries: 0,
 	debits: 0,
-	all: 0,
+	result: 0,
 };
 
 export default function FinanceActivities(props) {
@@ -48,17 +48,32 @@ export default function FinanceActivities(props) {
 
 	const mountRowsHandler = results => {
 		setRowsActivities(results);
-		setTotals(
-			results.reduce((totalsAcc, curRow) => {
-				const entries = curRow.option === 'entry' ? totalsAcc.entries + curRow.value : totalsAcc.entries;
-				const debits = curRow.option === 'entry' ? totalsAcc.entries : totalsAcc.entries + curRow.value;
+
+		const result = results.reduce(
+			(totalsAcc, curRow) => {
+				let entries = totalsAcc.entries;
+				let debits = totalsAcc.debits;
+
+				if (curRow.option === 'entry') {
+					entries = totalsAcc.entries + curRow.value;
+				} else if (curRow.option === 'debit') {
+					debits = totalsAcc.debits + curRow.value;
+				}
 				return {
 					entries: entries,
 					debits: debits,
-					all: totalsAcc.all + curRow.value,
 				};
-			}, DEFAULT_TOTALS)
+			},
+			{
+				entries: 0,
+				debits: 0,
+			}
 		);
+		setTotals({
+			...result,
+			result: result.entries - result.debits,
+		});
+
 		setOptionShowContent(TABLE_ITENS);
 	};
 
@@ -67,27 +82,24 @@ export default function FinanceActivities(props) {
 	}, []);
 
 	useEffect(() => {
-		setTimeout(() => {
-			getActivitiesHandler({
-				type: GET_ACTIVITIES,
-				params: defaultParams(),
-				onMountRowsActivities: mountRowsHandler,
-			});
-			setMonths(Date.getLastMonths());
-		}, 500);
+		getActivitiesHandler({
+			type: GET_ACTIVITIES,
+			params: defaultParams(),
+			onMountRowsActivities: mountRowsHandler,
+		});
+		setMonths(Date.getLastMonths());
 	}, [getActivitiesHandler]);
 
 	const filterActivitiesHandler = params => {
-		const action = {
+		getActivitiesHandler({
 			type: GET_ACTIVITIES,
 			params: params,
 			onMountRowsActivities: mountRowsHandler,
-		};
-		getActivitiesHandler(action);
+		});
 	};
 
 	const getTitle = () => {
-		return props.option === 'expenses' ? 'Atividades Maio/21' : 'Despesas Maio/21';
+		return 'Atividades';
 	};
 
 	const getListActivities = () =>
@@ -123,7 +135,7 @@ export default function FinanceActivities(props) {
 				<Grid>
 					<CardTotals option="entry" value={totals.entries} />
 					<CardTotals option="debit" value={totals.debits} />
-					<CardTotals option="all" value={totals.all} />
+					<CardTotals option="result" value={totals.result} />
 				</Grid>
 
 				<Grid>

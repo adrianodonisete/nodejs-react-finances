@@ -14,7 +14,7 @@ const CardTotals = props => {
 				return classes.green;
 			case 'debit':
 				return classes.red;
-			case 'all':
+			case 'result':
 			default:
 				return classes.blue;
 		}
@@ -26,9 +26,9 @@ const CardTotals = props => {
 				return 'Recebidos';
 			case 'debit':
 				return 'Despesas';
-			case 'all':
+			case 'result':
 			default:
-				return 'Total';
+				return 'Resultado';
 		}
 	};
 

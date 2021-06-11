@@ -51,16 +51,23 @@ export default function ActivitiesRegisterForm() {
 	const submitValidateHandler = event => {
 		event.preventDefault();
 
-		console.log(1);
 		setOptionShowContent(PROGRESS_SHOW);
 
-		setTimeout(() => {
-			dispatchActivitiesState({
-				type: CREATE_ACTIVITIES,
-				listActivities: listActivities,
-				onResultShow: resultShowHandler,
-			});
-		}, 4000);
+		//? TODO creta a method do generate the field "hash"
+		const newActivities = listActivities.map(activity => {
+			return {
+				...activity,
+				hash: activity.option + '-' + activity.category,
+			};
+		});
+
+		console.log(newActivities);
+
+		dispatchActivitiesState({
+			type: CREATE_ACTIVITIES,
+			listActivities: newActivities,
+			onResultShow: resultShowHandler,
+		});
 	};
 
 	const resultShowHandler = totalActivities => {

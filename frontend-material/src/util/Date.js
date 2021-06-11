@@ -33,7 +33,8 @@ const Date = {
 		let operator = 0;
 		while (loops < 12) {
 			const month = new window.Date(today.getFullYear(), today.getMonth() + operator, 1);
-			const name = formatter.format(month).toString().replace('.', '') + '/' + month.getFullYear();
+			const name =
+				formatter.format(month).toString().replace('.', '') + '/' + month.getFullYear().toString().substring(2);
 			months.push({
 				text: name.toUpperCase(),
 				date: month.toISOString(),
@@ -48,8 +49,8 @@ const Date = {
 		if (month) {
 			date = new window.Date(month);
 		}
-		const firstDayOfMonth = new window.Date(date.getFullYear(), date.getMonth() + 1, 1);
-		const lastDayOfMonth = new window.Date(date.getFullYear(), date.getMonth() + 2, 0);
+		const firstDayOfMonth = new window.Date(date.getFullYear(), date.getMonth(), 1);
+		const lastDayOfMonth = new window.Date(date.getFullYear(), date.getMonth() + 1, 0);
 		return {
 			firstDayOfMonth,
 			lastDayOfMonth,
