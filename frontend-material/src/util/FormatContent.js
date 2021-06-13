@@ -23,8 +23,28 @@ const FormatContent = {
 			category: FormatContent.setCategory(arr[4]),
 		};
 	},
+	toHash: activity => {
+		const date_event = new window.Date(activity.dateEvent);
+		return (
+			activity.option +
+			'-' +
+			date_event.toISOString() +
+			'-' +
+			activity.value +
+			'-' +
+			FormatContent.setDescription(activity.description)
+				.replaceAll(/[^0-9a-zA-Z]/gim, '-')
+				.replaceAll(/[-]{2,}/gim, '-') +
+			'-' +
+			activity.category
+		);
+	},
 	valueToFloat: value => {
-		return parseFloat(value.replaceAll(',', '.').replaceAll(/r|\$/gim, '').trim());
+		value = value.replaceAll(/r|\$/gim, '');
+		if (value.includes(',')) {
+			return parseFloat(value.replaceAll('.', '').replaceAll(',', '.').trim());
+		}
+		return parseFloat(value.trim());
 	},
 	setValue: value => {
 		return parseFloat(Math.abs(value)).toFixed(2);
@@ -45,7 +65,7 @@ const FormatContent = {
 	setDescription: description => {
 		return description
 			.replaceAll('*', ' ')
-			.replaceAll(/[ ]{2}/gim, ' ')
+			.replaceAll(/[ ]{2,}/gim, ' ')
 			.toLowerCase()
 			.trim();
 	},

@@ -26,7 +26,6 @@ export default function ActivitiesRegisterForm() {
 	const classes = useStyles();
 
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
-	console.log(activitiesState);
 
 	const [activitiesInserted, setActivitiesInserted] = useState(0);
 	const [listActivities, setListActivities] = useState([]);
@@ -53,25 +52,23 @@ export default function ActivitiesRegisterForm() {
 
 		setOptionShowContent(PROGRESS_SHOW);
 
-		//? TODO creta a method do generate the field "hash"
 		const newActivities = listActivities.map(activity => {
 			return {
 				...activity,
-				hash: activity.option + '-' + activity.category,
+				hash: FormatContent.toHash(activity),
 			};
 		});
-
-		console.log(newActivities);
 
 		dispatchActivitiesState({
 			type: CREATE_ACTIVITIES,
 			listActivities: newActivities,
 			onResultShow: resultShowHandler,
 		});
+
+		console.log(activitiesState);
 	};
 
 	const resultShowHandler = totalActivities => {
-		console.log([RESULT_SHOW, totalActivities]);
 		setActivitiesInserted(totalActivities);
 		setOptionShowContent(RESULT_SHOW);
 	};
@@ -130,6 +127,9 @@ export default function ActivitiesRegisterForm() {
 			<If show={optionShowContent === TEXT_AREA}>
 				<Typography variant="h4" gutterBottom>
 					Cole o conteúdo da planilha
+				</Typography>
+				<Typography variant="subtitle2" gutterBottom>
+					<strong>Colunas:</strong> OPÇÃO, DATA, VALOR, DESCRIÇÃO e CATEGORIA
 				</Typography>
 				<Typography variant="subtitle2" gutterBottom>
 					<em>Permitido tab ou ponto e vírgula</em>

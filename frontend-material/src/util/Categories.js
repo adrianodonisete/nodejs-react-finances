@@ -16,6 +16,7 @@ const Categories = [
 	'dividendos',
 	'bonus',
 	'outros-ganhos',
+	'supermercado',
 ];
 
 export default Categories;

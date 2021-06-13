@@ -4,8 +4,6 @@ mongoose.Promise = global.Promise;
 const dotenv = require('dotenv');
 dotenv.config();
 
-const DB_USER = process.env.DB_USER;
-const DB_PASS = process.env.DB_PASS;
 const DB_URL = process.env.URL_MONGO;
 
 console.log(DB_URL);
@@ -15,8 +13,6 @@ module.exports = mongoose
 		useNewUrlParser: true,
 		// useUnifiedTopology: true,
 		auth: { authSource: 'admin' },
-		user: DB_USER,
-		pass: DB_PASS,
 	})
 	.catch(e => console.log('error', e));
 

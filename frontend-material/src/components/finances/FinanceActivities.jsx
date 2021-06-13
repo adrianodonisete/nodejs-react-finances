@@ -30,7 +30,6 @@ const DEFAULT_TOTALS = {
 
 export default function FinanceActivities(props) {
 	const [activitiesState, dispatchActivitiesState] = useReducer(FinancesReducers, DEFAULT_FORM_ACTIVITIES);
-	console.log(activitiesState);
 
 	const [optionShowContent, setOptionShowContent] = useState(PROGRESS_SHOW);
 	const [rowsActivities, setRowsActivities] = useState([]);
@@ -38,7 +37,9 @@ export default function FinanceActivities(props) {
 	const [totals, setTotals] = useState(DEFAULT_TOTALS);
 
 	const defaultParams = () => {
-		const dates = Date.getFirstAndLastDayOfMonth('2021-05-01');
+		console.log(activitiesState);
+
+		const dates = Date.getFirstAndLastDayOfMonth('2021-06-01');
 		return {
 			sort: 'dateEvent',
 			dateEvent__gte: dates.firstDayOfMonth,

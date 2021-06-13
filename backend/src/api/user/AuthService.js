@@ -9,7 +9,7 @@ dotenv.config();
 const authSecret = process.env.AUTH_SECRET;
 
 const emailRegex = /\S+@\S+\.\S+/;
-const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15})/;
+const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[@#$%]).{8,15})/; //(?=.*[A-Z])
 
 const sendErrorsFromDB = (res, dbErrors) => {
 	console.log(dbErrors);
@@ -27,10 +27,10 @@ const login = (req, res, next) => {
 			return sendErrorsFromDB(res, err);
 		} else if (user && bcrypt.compareSync(password, user.password)) {
 			const token = jwt.sign({ ...user }, authSecret, {
-				expiresIn: '1 day',
+				expiresIn: '7 day',
 			});
 
-			res.json({ name: user.name, email: user.email, token });
+			res.json({ name: user.name, email: user.email, token, expiresIn: '7 days' });
 		} else {
 			return res.status(400).send({ errors: ['Usuário/Senha inválidos'] });
 		}
@@ -57,8 +57,8 @@ const signup = (req, res, next) => {
 	if (!password.match(passwordRegex)) {
 		return res.status(400).send({
 			errors: [
-				'Senha precisar ter: uma letra maiúscula, uma letra minúscula,' +
-					' um número, uma caractere especial(@#$%) e tamanho entre 6-20.',
+				'Senha precisa ter: uma letra maiúscula, ' +
+					' um número, uma caractere especial(@#$%) e tamanho entre 8-15.',
 			],
 		});
 	}

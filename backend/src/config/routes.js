@@ -20,7 +20,7 @@ module.exports = function (server) {
 	openApi.post('/signup', AuthService.signup);
 	openApi.post('/validateToken', AuthService.validateToken);
 
-	//? finances rota aberta
+	//? finances rotas abertas
 	const router = express.Router();
 	server.use('/v2', router);
 

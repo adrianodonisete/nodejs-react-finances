@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Select, TableCell, TableRow, TextField } from '@material-ui/core';
 import Date from '../../util/Date';
+import Categories from '../../util/Categories';
 
 const ActivitiesFilterForm = props => {
 	const optionRef = useRef('');
@@ -8,6 +9,8 @@ const ActivitiesFilterForm = props => {
 	const dateEventRef = useRef('');
 	const descriptionRef = useRef('');
 	const valueRef = useRef('');
+
+	const categories = Categories;
 
 	const getMonthsOptions = () =>
 		props.months.map(option => (
@@ -65,13 +68,24 @@ const ActivitiesFilterForm = props => {
 				</Select>
 			</TableCell>
 			<TableCell>
-				<TextField
+				<Select
 					inputRef={categoryRef}
-					id={`filter-category`}
-					name={`category`}
+					native
 					fullWidth
-					placeholder="categoria..."
-				/>
+					inputProps={{
+						name: `category`,
+						id: `filter-category`,
+					}}
+				>
+					<option key={`category[todos]`} value={''}>
+						Todos
+					</option>
+					{categories.map((cat, key) => (
+						<option key={`category[${key}-${cat}]`} value={cat}>
+							{cat}
+						</option>
+					))}
+				</Select>
 			</TableCell>
 			<TableCell>
 				<Select
